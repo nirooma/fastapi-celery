@@ -9,6 +9,7 @@ from project.celery.celery_utils import create_celery
 
 from .celery import tasks  # noqa
 from .config import BaseConfig, get_settings
+from .database import init_db
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +24,12 @@ def create_app() -> FastAPI:
     from project.logging import configure_logging
 
     configure_logging()
+
+    @app.on_event("startup")
+    async def startup_event():
+        logger.info("initialize database...")
+        init_db(app)
+        logger.info("initialization database success")
 
     @app.get("/health_check")
     async def health_check(

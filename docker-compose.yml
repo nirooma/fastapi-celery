@@ -1,5 +1,11 @@
 version: '3.8'
 
+x-environment: &commonEnvironment
+    SETTINGS_CONFIGURATION: 'development'
+    DATABASE_URL: "postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
+    CELERY_BROKER_URL: "amqp://rabbitmq:5672"
+    CELERY_RESULT_BACKEND: "redis://redis:6379"
+
 services:
   web:
     build:
@@ -15,11 +21,12 @@ services:
       - .:/app
     ports:
       - "8000:8000"
-    environment:
-      - SETTINGS_CONFIGURATION=development
-      - DATABASE_URL=postgresql://postgres:password@db/fastapi
-      - CELERY_BROKER_URL=amqp://rabbitmq:5672
-      - CELERY_RESULT_BACKEND=redis://redis:6379
+    environment: *commonEnvironment
+#    environment:
+#      - SETTINGS_CONFIGURATION=development
+#      - DATABASE_URL=postgres://fastapi_celery:fastapi_celery@db/fastapi_celery
+#      - CELERY_BROKER_URL=amqp://rabbitmq:5672
+#      - CELERY_RESULT_BACKEND=redis://redis:6379
     depends_on:
       - rabbitmq
       - redis
@@ -28,25 +35,25 @@ services:
   db:
     image: postgres:13.4-alpine
     container_name: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_DB=fastapi
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=fastapi_celery
+      - POSTGRES_USER=fastapi_celery
+      - POSTGRES_PASSWORD=fastapi_celery
 
-  pgadmin:
-    container_name: pgadmin4
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    ports:
-      - "5050:80"
-    volumes:
-      - pgadmin:/var/lib/pgadmin
+#  pgadmin:
+#    container_name: pgadmin4
+#    image: dpage/pgadmin4
+#    restart: always
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+#      PGADMIN_DEFAULT_PASSWORD: admin
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    ports:
+#      - "5050:80"
+#    volumes:
+#      - pgadmin:/var/lib/pgadmin
 
   redis:
     image: redis:6.2.5-alpine
@@ -67,11 +74,12 @@ services:
     command: /start-celeryworker
     volumes:
       - .:/app
-    environment:
-      - SETTINGS_CONFIGURATION=development
-      - DATABASE_URL=postgresql://postgres:password@db/fastapi
-      - CELERY_BROKER_URL=amqp://rabbitmq:5672
-      - CELERY_RESULT_BACKEND=redis://redis:6379
+#    environment:
+#      - SETTINGS_CONFIGURATION=development
+#      - DATABASE_URL=postgres://fastapi_celery:fastapi_celery@db/fastapi_celery
+#      - CELERY_BROKER_URL=amqp://rabbitmq:5672
+#      - CELERY_RESULT_BACKEND=redis://redis:6379
+    environment: *commonEnvironment
     depends_on:
       - rabbitmq
       - redis
@@ -86,11 +94,12 @@ services:
     command: /start-celerybeat
     volumes:
       - .:/app
-    environment:
-      - SETTINGS_CONFIGURATION=development
-      - DATABASE_URL=postgresql://postgres:password@db/fastapi
-      - CELERY_BROKER_URL=amqp://rabbitmq:5672
-      - CELERY_RESULT_BACKEND=redis://redis:6379
+#    environment:
+#      - SETTINGS_CONFIGURATION=development
+#      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+#      - CELERY_BROKER_URL=amqp://rabbitmq:5672
+#      - CELERY_RESULT_BACKEND=redis://redis:6379
+    environment: *commonEnvironment
     depends_on:
       - rabbitmq
       - redis
@@ -105,11 +114,12 @@ services:
     command: /start-flower
     volumes:
       - .:/app
-    environment:
-      - SETTINGS_CONFIGURATION=development
-      - DATABASE_URL=postgresql://postgres:password@db/fastapi
-      - CELERY_BROKER_URL=amqp://rabbitmq:5672
-      - CELERY_RESULT_BACKEND=redis://redis:6379
+#    environment:
+#      - SETTINGS_CONFIGURATION=development
+#      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+#      - CELERY_BROKER_URL=amqp://rabbitmq:5672
+#      - CELERY_RESULT_BACKEND=redis://redis:6379
+    environment: *commonEnvironment
     ports:
       - "5555:5555"
     depends_on:
@@ -117,6 +127,6 @@ services:
       - redis
       - db
 
-volumes:
-  postgres_data:
-  pgadmin:
+#volumes:
+#  postgres_data:
+#  pgadmin:

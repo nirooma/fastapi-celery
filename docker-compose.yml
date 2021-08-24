@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./compose/local/fastapi/Dockerfile
+    image: fastapi_celery_example_web
+    container_name: fastapi
+    # '/start' is the shell script used to run the service
+    command: /start
+    # this volume is used to map the files and folders on the host to the container
+    # so if we change code on the host, code in the docker container will also be changed
+    volumes:
+      - .:/app
+    ports:
+      - "8010:8000"
+    environment:
+      - SETTINGS_CONFIGURATION=development
+      - DATABASE_URL=postgresql://postgres:password@db/fastapi
+      - CELERY_BROKER_URL=amqp://rabbitmq:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379
+    depends_on:
+      - rabbitmq
+      - redis
+      - db
+
+  db:
+    image: postgres:13.4-alpine
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=fastapi
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
+  redis:
+    image: redis:6.2.5-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3.9.4-management
+    container_name: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+#  celery_worker:
+#    build:
+#      context: .
+#      dockerfile: ./compose/local/fastapi/Dockerfile
+#    image: fastapi_celery_example_celery_worker
+#    command: /start-celeryworker
+#    volumes:
+#      - .:/app
+#    env_file:
+#      - .env/.dev-sample
+#    depends_on:
+#      - redis
+#      - db
+#
+#  celery_beat:
+#    build:
+#      context: .
+#      dockerfile: ./compose/local/fastapi/Dockerfile
+#    image: fastapi_celery_example_celery_beat
+#    command: /start-celerybeat
+#    volumes:
+#      - .:/app
+#    env_file:
+#      - .env/.dev-sample
+#    depends_on:
+#      - redis
+#      - db
+
+#  flower:
+#    build:
+#      context: .
+#      dockerfile: ./compose/local/fastapi/Dockerfile
+#    image: fastapi_celery_example_celey_flower
+#    command: /start-flower
+#    volumes:
+#      - .:/app
+##    env_file:
+##      - .env/.dev-sample
+#    ports:
+#      - "5557:5555"
+#    depends_on:
+#      - redis
+#      - db
+
+volumes:
+  postgres_data:

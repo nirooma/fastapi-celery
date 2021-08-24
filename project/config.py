@@ -17,12 +17,12 @@ class BaseConfig:
     result_backend: str = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379")
 
     # Celery Beat
-    beat_schedule: dict = {
-        "task-schedule-work": {
-            "task": "task_schedule_work",
-            "schedule": 30.0,  # five seconds
-        },
-    }
+    # beat_schedule: dict = {
+    #     "task-schedule-work": {
+    #         "task": "task_schedule_work",
+    #         "schedule": 30.0,  # five seconds
+    #     },
+    # }
 
     def __str__(self):
         return f"{self.__class__.__name__}"
@@ -49,8 +49,7 @@ def get_settings():
     }
 
     config_name = os.environ.get("SETTINGS_CONFIGURATION", "development")
-    config_cls = config_cls_dict[config_name]
-    return config_cls()
+    return config_cls_dict[config_name]()
 
 
 settings = get_settings()

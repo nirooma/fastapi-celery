@@ -6,6 +6,7 @@ from fastapi import Depends, FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
 from project.celery.celery_utils import create_celery
+from project import urls
 
 from .celery import tasks  # noqa
 from .config import BaseConfig, get_settings
@@ -22,14 +23,17 @@ def create_app() -> FastAPI:
 
     # Settings Logging System
     from project.logging import configure_logging
-
     configure_logging()
+
+    app.include_router(prefix="/api/v1", router=urls.api_routers)
 
     @app.on_event("startup")
     async def startup_event():
         logger.info("initialize database...")
-        init_db(app)
-        logger.info("initialization database success")
+        try:
+            init_db(app)
+        except:
+            logger.error("initialization database failed")
 
     @app.get("/health_check")
     async def health_check(

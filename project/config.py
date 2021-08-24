@@ -16,10 +16,10 @@ class BaseConfig:
     result_backend: str = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379")
 
     # Celery Beat
-    beat_scheduler: dict = {
+    beat_schedule: dict = {
         "task-schedule-work": {
             "task": "task_schedule_work",
-            "schedule": 5.0,  # five seconds
+            "schedule": 30.0,  # five seconds
         },
     }
 

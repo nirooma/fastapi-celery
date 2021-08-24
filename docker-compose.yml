@@ -22,11 +22,6 @@ services:
     ports:
       - "8000:8000"
     environment: *commonEnvironment
-#    environment:
-#      - SETTINGS_CONFIGURATION=development
-#      - DATABASE_URL=postgres://fastapi_celery:fastapi_celery@db/fastapi_celery
-#      - CELERY_BROKER_URL=amqp://rabbitmq:5672
-#      - CELERY_RESULT_BACKEND=redis://redis:6379
     depends_on:
       - rabbitmq
       - redis
@@ -74,11 +69,6 @@ services:
     command: /start-celeryworker
     volumes:
       - .:/app
-#    environment:
-#      - SETTINGS_CONFIGURATION=development
-#      - DATABASE_URL=postgres://fastapi_celery:fastapi_celery@db/fastapi_celery
-#      - CELERY_BROKER_URL=amqp://rabbitmq:5672
-#      - CELERY_RESULT_BACKEND=redis://redis:6379
     environment: *commonEnvironment
     depends_on:
       - rabbitmq
@@ -94,11 +84,6 @@ services:
     command: /start-celerybeat
     volumes:
       - .:/app
-#    environment:
-#      - SETTINGS_CONFIGURATION=development
-#      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
-#      - CELERY_BROKER_URL=amqp://rabbitmq:5672
-#      - CELERY_RESULT_BACKEND=redis://redis:6379
     environment: *commonEnvironment
     depends_on:
       - rabbitmq
@@ -114,11 +99,6 @@ services:
     command: /start-flower
     volumes:
       - .:/app
-#    environment:
-#      - SETTINGS_CONFIGURATION=development
-#      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
-#      - CELERY_BROKER_URL=amqp://rabbitmq:5672
-#      - CELERY_RESULT_BACKEND=redis://redis:6379
     environment: *commonEnvironment
     ports:
       - "5555:5555"

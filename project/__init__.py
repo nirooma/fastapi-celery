@@ -2,6 +2,7 @@ import datetime
 import logging
 import os
 
+import psycopg2
 from fastapi import Depends, FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
@@ -25,6 +26,7 @@ def create_app() -> FastAPI:
     from project.logging import configure_logging
     configure_logging()
 
+    # route to urls
     app.include_router(prefix="/api/v1", router=urls.api_routers)
 
     @app.on_event("startup")
@@ -32,8 +34,8 @@ def create_app() -> FastAPI:
         logger.info("initialize database...")
         try:
             init_db(app)
-        except:
-            logger.error("initialization database failed")
+        except psycopg2.Error as error:
+            logger.error("initialization database failed", exc_info=error)
 
     @app.get("/health_check")
     async def health_check(

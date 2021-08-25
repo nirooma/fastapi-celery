@@ -1,12 +1,8 @@
 from celery import shared_task
+from fastapi import Request
 
 
-@shared_task
+@shared_task(name="check_connection")
 def celery_ping():
     print("Check Celery Connection!")
     return 10
-
-
-@shared_task(name="task_schedule_work")
-def task_schedule_work():
-    print("Hello there!")

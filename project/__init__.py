@@ -27,7 +27,7 @@ def create_app() -> FastAPI:
     configure_logging()
 
     # route to urls
-    app.include_router(prefix="/api/v1", router=urls.api_routers)
+    app.include_router(prefix="/api/v1", router=urls.routers)
 
     @app.on_event("startup")
     async def startup_event():

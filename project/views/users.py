@@ -1,11 +1,10 @@
 from fastapi import APIRouter
 
-from project.models import User
 
-router = APIRouter()
+views = APIRouter()
 
 
-@router.get("/")
+@views.get("/")
 async def users():
     return "all_users"
 

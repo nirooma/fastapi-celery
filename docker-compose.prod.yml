@@ -1,14 +1,14 @@
-version: '3.8'
+version: '3.3'
 
-x-environment: &commonEnvironment
-    SETTINGS_CONFIGURATION: 'development'
-    DATABASE_URL: "postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
-    CELERY_BROKER_URL: "amqp://rabbitmq:5672"
-    CELERY_RESULT_BACKEND: "redis://redis:6379"
-    CELERY_FLOWER_USER: admin
-    CELERY_FLOWER_PASSWORD: admin
-    RABBITMQ_DEFAULT_USER: admin
-    RABBITMQ_DEFAULT_PASS: admin
+#x-environment: &commonEnvironment
+#    SETTINGS_CONFIGURATION: 'development'
+#    DATABASE_URL: "postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
+#    CELERY_BROKER_URL: "amqp://rabbitmq:5672"
+#    CELERY_RESULT_BACKEND: "redis://redis:6379"
+#    CELERY_FLOWER_USER: admin
+#    CELERY_FLOWER_PASSWORD: admin
+#    RABBITMQ_DEFAULT_USER: admin
+#    RABBITMQ_DEFAULT_PASS: admin
 
 services:
   nginx:
@@ -36,7 +36,15 @@ services:
     # so if we change code on the host, code in the docker container will also be changed
     volumes:
        - uploadfiles:/app/upload
-    environment: *commonEnvironment
+    environment:
+      - SETTINGS_CONFIGURATION='development'
+      - DATABASE_URL="postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
+      - CELERY_BROKER_URL="amqp://rabbitmq:5672"
+      - CELERY_RESULT_BACKEND="redis://redis:6379"
+      - CELERY_FLOWER_USER=admin
+      - CELERY_FLOWER_PASSWORD=admin
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
     depends_on:
       - rabbitmq
       - redis
@@ -70,7 +78,15 @@ services:
     command: /start-celeryworker
     volumes:
        - uploadfiles:/app/upload
-    environment: *commonEnvironment
+    environment:
+      - SETTINGS_CONFIGURATION='development'
+      - DATABASE_URL="postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
+      - CELERY_BROKER_URL="amqp://rabbitmq:5672"
+      - CELERY_RESULT_BACKEND="redis://redis:6379"
+      - CELERY_FLOWER_USER=admin
+      - CELERY_FLOWER_PASSWORD=admin
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
     depends_on:
       - rabbitmq
       - redis
@@ -85,7 +101,15 @@ services:
     command: /start-celerybeat
     volumes:
        - uploadfiles:/app/upload
-    environment: *commonEnvironment
+    environment:
+      - SETTINGS_CONFIGURATION='development'
+      - DATABASE_URL="postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
+      - CELERY_BROKER_URL="amqp://rabbitmq:5672"
+      - CELERY_RESULT_BACKEND="redis://redis:6379"
+      - CELERY_FLOWER_USER=admin
+      - CELERY_FLOWER_PASSWORD=admin
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
     depends_on:
       - rabbitmq
       - redis
@@ -100,7 +124,15 @@ services:
     command: /start-flower
     volumes:
        - uploadfiles:/app/upload
-    environment: *commonEnvironment
+    environment:
+      - SETTINGS_CONFIGURATION='development'
+      - DATABASE_URL="postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
+      - CELERY_BROKER_URL="amqp://rabbitmq:5672"
+      - CELERY_RESULT_BACKEND="redis://redis:6379"
+      - CELERY_FLOWER_USER=admin
+      - CELERY_FLOWER_PASSWORD=admin
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
     depends_on:
       - rabbitmq
       - redis

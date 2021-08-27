@@ -53,4 +53,5 @@ def get_settings():
     return config_cls()
 
 
-settings = get_settings()
+# settings = get_settings()
+settings = DevelopmentConfig()

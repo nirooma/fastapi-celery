@@ -37,10 +37,10 @@ services:
     volumes:
        - uploadfiles:/app/upload
     environment:
-      - SETTINGS_CONFIGURATION='development'
-      - DATABASE_URL="postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
-      - CELERY_BROKER_URL="amqp://rabbitmq:5672"
-      - CELERY_RESULT_BACKEND="redis://redis:6379"
+      - SETTINGS_CONFIGURATION=development
+      - DATABASE_URL=postgres://fastapi_celery:fastapi_celery@db/fastapi_celery
+      - CELERY_BROKER_URL=amqp://rabbitmq:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379
       - CELERY_FLOWER_USER=admin
       - CELERY_FLOWER_PASSWORD=admin
       - RABBITMQ_DEFAULT_USER=admin
@@ -79,10 +79,10 @@ services:
     volumes:
        - uploadfiles:/app/upload
     environment:
-      - SETTINGS_CONFIGURATION='development'
-      - DATABASE_URL="postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
-      - CELERY_BROKER_URL="amqp://rabbitmq:5672"
-      - CELERY_RESULT_BACKEND="redis://redis:6379"
+      - SETTINGS_CONFIGURATION=development
+      - DATABASE_URL=postgres://fastapi_celery:fastapi_celery@db/fastapi_celery
+      - CELERY_BROKER_URL=amqp://rabbitmq:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379
       - CELERY_FLOWER_USER=admin
       - CELERY_FLOWER_PASSWORD=admin
       - RABBITMQ_DEFAULT_USER=admin
@@ -102,10 +102,10 @@ services:
     volumes:
        - uploadfiles:/app/upload
     environment:
-      - SETTINGS_CONFIGURATION='development'
-      - DATABASE_URL="postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
-      - CELERY_BROKER_URL="amqp://rabbitmq:5672"
-      - CELERY_RESULT_BACKEND="redis://redis:6379"
+      - SETTINGS_CONFIGURATION=development
+      - DATABASE_URL=postgres://fastapi_celery:fastapi_celery@db/fastapi_celery
+      - CELERY_BROKER_URL=amqp://rabbitmq:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379
       - CELERY_FLOWER_USER=admin
       - CELERY_FLOWER_PASSWORD=admin
       - RABBITMQ_DEFAULT_USER=admin
@@ -125,10 +125,10 @@ services:
     volumes:
        - uploadfiles:/app/upload
     environment:
-      - SETTINGS_CONFIGURATION='development'
-      - DATABASE_URL="postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
-      - CELERY_BROKER_URL="amqp://rabbitmq:5672"
-      - CELERY_RESULT_BACKEND="redis://redis:6379"
+      - SETTINGS_CONFIGURATION=development
+      - DATABASE_URL=postgres://fastapi_celery:fastapi_celery@db/fastapi_celery
+      - CELERY_BROKER_URL=amqp://rabbitmq:5672
+      - CELERY_RESULT_BACKEND=redis://redis:6379
       - CELERY_FLOWER_USER=admin
       - CELERY_FLOWER_PASSWORD=admin
       - RABBITMQ_DEFAULT_USER=admin

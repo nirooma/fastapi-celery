@@ -29,7 +29,7 @@ class BaseConfig:
 
 
 class DevelopmentConfig(BaseConfig):
-    pass
+    ENVIRONMENT: str = "development"
 
 
 class ProductionConfig(BaseConfig):
@@ -45,13 +45,11 @@ def get_settings():
     config_cls_dict = {
         "development": DevelopmentConfig,
         "production": ProductionConfig,
-        "testing": TestingConfig
+        "testing": TestingConfig,
     }
 
-    config_name = os.environ.get("FASTAPI_CONFIG", "development")
-    config_cls = config_cls_dict[config_name]
-    return config_cls()
+    config_name = os.environ.get("SETTINGS_CONFIGURATION", "development")
+    return config_cls_dict[config_name]()
 
 
-# settings = get_settings()
-settings = DevelopmentConfig()
+settings = get_settings()

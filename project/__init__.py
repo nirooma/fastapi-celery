@@ -47,7 +47,7 @@ def create_app() -> FastAPI:
                 "timestamp": datetime.datetime.now().isoformat(),
                 "container": os.uname()[1],
                 "path": request.scope.get("path"),
-                "environment": settings.ENVIRONMENT,
+                # "environment": settings.ENVIRONMENT,
                 "debugMode": settings.DEBUG,
             }
         )

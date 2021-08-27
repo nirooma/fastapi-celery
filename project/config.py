@@ -29,7 +29,8 @@ class BaseConfig:
 
 
 class DevelopmentConfig(BaseConfig):
-    ENVIRONMENT: str = "development"
+    pass
+    # ENVIRONMENT: str = "development"
 
 
 class ProductionConfig(BaseConfig):
@@ -49,7 +50,8 @@ def get_settings():
     }
 
     config_name = os.environ.get("SETTINGS_CONFIGURATION", "development")
-    return config_cls_dict[config_name]()
+    res = config_cls_dict[config_name]
+    return res()
 
 
 settings = get_settings()

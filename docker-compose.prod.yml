@@ -1,15 +1,5 @@
 version: '3.3'
 
-#x-environment: &commonEnvironment
-#    SETTINGS_CONFIGURATION: 'development'
-#    DATABASE_URL: "postgres://fastapi_celery:fastapi_celery@db/fastapi_celery"
-#    CELERY_BROKER_URL: "amqp://rabbitmq:5672"
-#    CELERY_RESULT_BACKEND: "redis://redis:6379"
-#    CELERY_FLOWER_USER: admin
-#    CELERY_FLOWER_PASSWORD: admin
-#    RABBITMQ_DEFAULT_USER: admin
-#    RABBITMQ_DEFAULT_PASS: admin
-
 services:
   nginx:
     build: ./compose/production/nginx
@@ -17,7 +7,7 @@ services:
     volumes:
       - uploadfiles:/app/upload
     ports:
-      - "8000:80"
+      - "80:80"
       - "5559:5555"
       - "15672:15672"
     depends_on:

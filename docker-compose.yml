@@ -107,6 +107,6 @@ services:
       - redis
       - db
 
-#volumes:
+volumes:
 #  postgres_data:
-#  pgadmin:
+  pgadmin:

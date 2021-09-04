@@ -49,8 +49,8 @@ echo "##########################################"
 echo
 
 # run zsh
-rm -rf ~/.zshrc
-echo "$(cat /opt/ranger/scripts/zsh_configuration)" >> ~/.zshrc
-zsh
+#rm -rf ~/.zshrc
+#echo "$(cat /opt/ranger/scripts/zsh_configuration)" >> ~/.zshrc
+#zsh
 
 exec "$@"

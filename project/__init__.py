@@ -1,6 +1,7 @@
 import datetime
 import logging
 import os
+import platform
 
 import psycopg2
 from fastapi import Depends, FastAPI, Request, status
@@ -38,17 +39,14 @@ def create_app() -> FastAPI:
             logger.error("initialization database failed", exc_info=error)
 
     @app.get("/health_check")
-    async def health_check(
-        request: Request, settings: BaseConfig = Depends(get_settings)
-    ):
+    async def health_check(settings: BaseConfig = Depends(get_settings)):
         return JSONResponse(
             {
                 "status": status.HTTP_200_OK,
                 "timestamp": datetime.datetime.now().ctime(),
-                "container": os.uname()[1],
-                "path": request.scope.get("path"),
                 "environment": settings.ENVIRONMENT,
-                "debugMode": settings.DEBUG
+                "debugMode": settings.DEBUG,
+                "OperatingSystem": platform.uname()
             }
         )
 

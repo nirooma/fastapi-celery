@@ -3,5 +3,5 @@
 set -o errexit
 set -o pipefail
 set -o nounset
-
+echo
 uvicorn main:app --reload --reload-dir project --host 0.0.0.0

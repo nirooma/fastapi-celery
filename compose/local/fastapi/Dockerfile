@@ -3,7 +3,6 @@ FROM python:3.9.6-slim-buster
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
-WORKDIR /opt/ranger
 
 RUN apt-get update && \
     apt-get install -y sudo \
@@ -34,9 +33,9 @@ COPY ./compose/local/fastapi/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-COPY ./compose/local/fastapi/start /opt/ranger/start
-#RUN sed -i 's/\r$//g' /opt/ranger/start
-RUN chmod +x /opt/ranger/start
+COPY ./compose/local/fastapi/start /start
+RUN sed -i 's/\r$//g' /start
+RUN chmod +x /start
 
 COPY ./compose/local/fastapi/celery/worker/start /start-celeryworker
 RUN sed -i 's/\r$//g' /start-celeryworker
@@ -50,7 +49,7 @@ COPY ./compose/local/fastapi/celery/flower/start /start-flower
 RUN sed -i 's/\r$//g' /start-flower
 RUN chmod +x /start-flower
 
-#WORKDIR /opt/ranger
+WORKDIR /opt/ranger
 
 COPY . .
 

@@ -49,7 +49,7 @@ echo
 
 # run zsh
 rm -rf ~/.zshrc
-echo "$(cat ./scripts/zsh_configuration)" >> ~/.zshrc
+echo "$(cat /opt/ranger/scripts/zsh_configuration)" >> ~/.zshrc
 zsh
 
 

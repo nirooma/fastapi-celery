@@ -99,4 +99,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias dev="uvicorn main:app --reload --reload-dir project --host 0.0.0.0"
+
+alias dev="/start"
+alias worker="/start-celeryworker"
+alias beat="/start-celerybeat"
+alias flower="/start-flower"

@@ -48,7 +48,7 @@ def create_app() -> FastAPI:
                 "container": os.uname()[1],
                 "path": request.scope.get("path"),
                 "environment": settings.ENVIRONMENT,
-                "debugMode": settings.DEBUG,
+                "debugMode": settings.DEBUG
             }
         )
 

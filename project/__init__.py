@@ -44,7 +44,7 @@ def create_app() -> FastAPI:
         return JSONResponse(
             {
                 "status": status.HTTP_200_OK,
-                "timestamp": datetime.datetime.now().isoformat(),
+                "timestamp": datetime.datetime.now().ctime(),
                 "container": os.uname()[1],
                 "path": request.scope.get("path"),
                 "environment": settings.ENVIRONMENT,

@@ -23,8 +23,8 @@ services:
       - "8000:8000"
     environment: *commonEnvironment
     depends_on:
-      - rabbitmq
-      - redis
+#      - rabbitmq
+#      - redis
       - db
 
   db:
@@ -36,76 +36,76 @@ services:
       - POSTGRES_DB=fastapi_celery
       - POSTGRES_USER=fastapi_celery
       - POSTGRES_PASSWORD=fastapi_celery
-
-#  pgadmin:
-#    container_name: pgadmin4
-#    image: dpage/pgadmin4
-#    restart: always
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-#      PGADMIN_DEFAULT_PASSWORD: admin
-#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#
+##  pgadmin:
+##    container_name: pgadmin4
+##    image: dpage/pgadmin4
+##    restart: always
+##    environment:
+##      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+##      PGADMIN_DEFAULT_PASSWORD: admin
+##      PGADMIN_CONFIG_SERVER_MODE: 'False'
+##    ports:
+##      - "5050:80"
+##    volumes:
+##      - pgadmin:/var/lib/pgadmin
+#
+#  redis:
+#    image: redis:6.2.5-alpine
+#    container_name: redis
+#
+#  rabbitmq:
+#    image: rabbitmq:3.9.4-management
+#    container_name: rabbitmq
 #    ports:
-#      - "5050:80"
+#      - "15672:15672"
+#
+#  celery_worker:
+#    build:
+#      context: .
+#      dockerfile: ./compose/local/fastapi/Dockerfile
+#    image: fastapi_celery_example_celery_worker
+#    container_name: worker
+#    command: /start-celeryworker
 #    volumes:
-#      - pgadmin:/var/lib/pgadmin
-
-  redis:
-    image: redis:6.2.5-alpine
-    container_name: redis
-
-  rabbitmq:
-    image: rabbitmq:3.9.4-management
-    container_name: rabbitmq
-    ports:
-      - "15672:15672"
-
-  celery_worker:
-    build:
-      context: .
-      dockerfile: ./compose/local/fastapi/Dockerfile
-    image: fastapi_celery_example_celery_worker
-    container_name: worker
-    command: /start-celeryworker
-    volumes:
-      - .:/app
-    environment: *commonEnvironment
-    depends_on:
-      - rabbitmq
-      - redis
-      - db
-
-  celery_beat:
-    build:
-      context: .
-      dockerfile: ./compose/local/fastapi/Dockerfile
-    container_name: scheduler
-    image: fastapi_celery_example_celery_beat
-    command: /start-celerybeat
-    volumes:
-      - .:/app
-    environment: *commonEnvironment
-    depends_on:
-      - rabbitmq
-      - redis
-      - db
-
-  flower:
-    build:
-      context: .
-      dockerfile: ./compose/local/fastapi/Dockerfile
-    image: fastapi_celery_example_celey_flower
-    container_name: flower
-    command: /start-flower
-    volumes:
-      - .:/app
-    environment: *commonEnvironment
-    ports:
-      - "5555:5555"
-    depends_on:
-      - rabbitmq
-      - redis
-      - db
+#      - .:/app
+#    environment: *commonEnvironment
+#    depends_on:
+#      - rabbitmq
+#      - redis
+#      - db
+#
+#  celery_beat:
+#    build:
+#      context: .
+#      dockerfile: ./compose/local/fastapi/Dockerfile
+#    container_name: scheduler
+#    image: fastapi_celery_example_celery_beat
+#    command: /start-celerybeat
+#    volumes:
+#      - .:/app
+#    environment: *commonEnvironment
+#    depends_on:
+#      - rabbitmq
+#      - redis
+#      - db
+#
+#  flower:
+#    build:
+#      context: .
+#      dockerfile: ./compose/local/fastapi/Dockerfile
+#    image: fastapi_celery_example_celey_flower
+#    container_name: flower
+#    command: /start-flower
+#    volumes:
+#      - .:/app
+#    environment: *commonEnvironment
+#    ports:
+#      - "5555:5555"
+#    depends_on:
+#      - rabbitmq
+#      - redis
+#      - db
 
 #volumes:
 #  postgres_data:

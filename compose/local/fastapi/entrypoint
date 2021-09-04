@@ -52,5 +52,5 @@ echo
 rm -rf ~/.zshrc
 echo "$(cat /opt/ranger/scripts/zsh_configuration)" >> ~/.zshrc
 zsh
-echo
+
 exec "$@"

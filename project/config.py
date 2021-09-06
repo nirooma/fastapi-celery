@@ -29,7 +29,7 @@ class BaseConfig:
 
 
 class DevelopmentConfig(BaseConfig):
-    ENVIRONMENT: str = "development"
+    pass
 
 
 class ProductionConfig(BaseConfig):

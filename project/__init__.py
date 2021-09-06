@@ -2,9 +2,9 @@ import datetime
 import logging
 import os
 import platform
-
+from fastapi.responses import RedirectResponse
 import psycopg2
-from fastapi import Depends, FastAPI, Request, status
+from fastapi import Depends, FastAPI, Request, status, Response
 from fastapi.responses import JSONResponse
 
 from project.celery.celery_utils import create_celery
@@ -40,11 +40,12 @@ def create_app() -> FastAPI:
 
     @app.get("/health_check")
     async def health_check(settings: BaseConfig = Depends(get_settings)):
+        """ Internal use only - Do not use with a client API """
+
         return JSONResponse(
             {
                 "status": status.HTTP_200_OK,
                 "timestamp": datetime.datetime.now().ctime(),
-                "environment": settings.ENVIRONMENT,
                 "debugMode": settings.DEBUG,
                 "OperatingSystem": platform.uname()
             }
